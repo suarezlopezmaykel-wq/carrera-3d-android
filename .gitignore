@@ -1,17 +1,22 @@
-# Godot 4+ specific ignores
-.godot/
-.nomedia
+; Archivo de configuración del motor.
+; Es mejor editarlo usando la interfaz de usuario del editor y no directamente,
+; pero para el sencillo juego de carreras en 3D podemos configurarlo aquí.
 
-# Godot-specific ignores
-.import/
-export.cfg
-export_credentials.cfg
-*.tmp
+config_version=5
 
-# Imported translations (automatically generated from CSV files)
-*.translation
+[solicitud]
 
-# Mono-specific ignores
-.mono/
-data_*/
-mono_crash.*.json
+config/name="Carrera 3D"
+run/main_scene="res://scenes/Main.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
+
+[mostrar]
+
+tamaño/ancho_ventana=720
+tamaño/altura_ventana=1280
+ventana/tamaño/modo=0
+ventana/dispositivo portátil/orientación=1
+
+[dispositivos_de_entrada]
+
+apuntar/emular_toque_desde_el_ratón=verdadero
