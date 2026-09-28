@@ -14,25 +14,15 @@ empleos:
       - nombre: Repositorio de Checkout
         Usos: acciones/checkout@v4
 
-      - nombre: Configurar Java JDK
-        Usos: actions/setup-java@v3
-        con:
-          distribución: 'temurin'
-          versión de Java: '17'
-
-      - nombre: Configurar el SDK de Android
-        Usos: android-actions/setup-android@v3
-
-      - nombre: Exportación de Godot para Android
-        Usos: firebelley/godot-export@v6.0.0
+      - nombre: Exportación de Godot
+        Usos: firebelley/godot-export@v5.2.1
         con:
           godot_version: 4.2.1
           export_debug: true
           ruta_del_proyecto_relativa: ./
-          archive_output: true
 
       - nombre: Cargar artefacto APK
         Usos: acciones/cargar-artefacto@v4
         con:
           nombre: Carrera-3D-APK
-          ruta: build/android/*.apk
+          ruta: build/android/
