@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        body { margin: 0; overflow: hidden; background: #000; font-family: sans-serif; }
+        #controls { position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: space-around; }
+        .btn { width: 40%; height: 80px; background: rgba(255,255,255,0.3); border: 2px solid white; border-radius: 15px; color: white; font-size: 30px; display: flex; align-items: center; justify-content: center; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="controls">
+        <div class="btn" id="left">◀</div>
+        <div class="btn" id="right">▶</div>
+    </div>
+    <script>
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xa0a0a0);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Luz
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(0, 10, 5);
+        scene.add(light);
+
+        // Pista
+        const trackGeo = new THREE.PlaneGeometry(10, 1000);
+        const trackMat = new THREE.MeshBasicMaterial({color: 0x333333});
+        const track = new THREE.Mesh(trackGeo, trackMat);
+        track.rotation.x = -Math.PI / 2;
+        scene.add(track);
+
+        // Carro (Cubo Rojo 3D)
+        const carGeo = new THREE.BoxGeometry(1, 0.5, 2);
+        const carMat = new THREE.MeshLambertMaterial({color: 0xff0000});
+        const car = new THREE.Mesh(carGeo, carMat);
+        car.position.set(0, 0.25, 0);
+        scene.add(car);
+
+        camera.position.set(0, 3, 5);
+        camera.lookAt(car.position);
+
+        let moveLeft = false, moveRight = false;
+        document.getElementById('left').ontouchstart = () => moveLeft = true;
+        document.getElementById('left').ontouchend = () => moveLeft = false;
+        document.getElementById('right').ontouchstart = () => moveRight = true;
+        document.getElementById('right').ontouchend = () => moveRight = false;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Avanzar carro
+            car.position.z -= 0.2;
+            camera.position.z -= 0.2;
+
+            if (moveLeft && car.position.x > -4) car.position.x -= 0.1;
+            if (moveRight && car.position.x < 4) car.position.x += 0.1;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
